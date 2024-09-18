@@ -41,11 +41,13 @@ void SortTool::QuickSortSubVector(vector<int>& data, int low, int high, const in
     // flag == 0 -> normal QS
     // flag == 1 -> randomized QS
 
-    int q;
-    if(flag == 0) q = Partition(data, low, high);
-    else q = RandomizedPartition(data, low, high);
-    QuickSortSubVector(data, low, q, flag);
-    QuickSortSubVector(data, q + 1, high, flag);
+    if(low < high){
+        int q;
+        if(flag == 0) q = Partition(data, low, high);
+        else q = RandomizedPartition(data, low, high);
+        QuickSortSubVector(data, low, q, flag);
+        QuickSortSubVector(data, q + 1, high, flag);
+    }
 
 }
 int SortTool::RandomizedPartition(vector<int>& data, int low, int high){
@@ -62,13 +64,15 @@ int SortTool::Partition(vector<int>& data, int low, int high) {
     // TODO : Please complete the function
 
     int x = data[low];
-    int i = low, j = high;
-    while(true){
-        while(data[j] > x) j--;
-        while(data[i] < x) i++;
-        if(i < j){
-            swap(data[i], data[j]);
-        }
+    int i = low - 1, j = high + 1;
+    while (true) {
+        do{
+            j--;
+        }while(j >= 0 && data[j] > x);
+        do{
+            i++;
+        }while(i <data.size() && data[i] < x);
+        if(i < j) swap(data[i], data[j]);
         else return j;
     }
 
