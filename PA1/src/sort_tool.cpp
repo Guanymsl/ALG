@@ -17,11 +17,11 @@ void SortTool::InsertionSort(vector<int>& data) {
     // Function : Insertion sort
     // TODO : Please complete insertion sort code here
 
-    for(int i=1; i<data.size(); i++){
-        int key = data[i];
-        int j = i - 1;
-        while(j>=0 && data[j] > key){
-            data[j] = data[j - 1];
+    for(int i = 1; i < data.size(); i++){
+        int key = data[i], j = i - 1;
+        while(j >= 0 && data[j] > key){
+            data[j + 1] = data[j];
+	        j--;
         }
         data[j + 1] = key;
     }
@@ -40,14 +40,38 @@ void SortTool::QuickSortSubVector(vector<int>& data, int low, int high, const in
     //        Partition function is needed
     // flag == 0 -> normal QS
     // flag == 1 -> randomized QS
+
+    int q;
+    if(flag == 0) q = Partition(data, low, high);
+    else q = RandomizedPartition(data, low, high);
+    QuickSortSubVector(data, low, q, flag);
+    QuickSortSubVector(data, q + 1, high, flag);
+
 }
 int SortTool::RandomizedPartition(vector<int>& data, int low, int high){
     // Function : RQS's Partition the vector
     // TODO : Please complete the function
+
+    int i = low + rand() % (high - low + 1);
+    swap(data[low], data[i]);
+    return Partition(data, low, high);
+
 }
 int SortTool::Partition(vector<int>& data, int low, int high) {
     // Function : Partition the vector
     // TODO : Please complete the function
+
+    int x = data[low];
+    int i = low, j = high;
+    while(true){
+        while(data[j] > x) j--;
+        while(data[i] < x) i++;
+        if(i < j){
+            swap(data[i], data[j]);
+        }
+        else return j;
+    }
+
 }
 
 // Merge sort method
@@ -61,7 +85,7 @@ void SortTool::MergeSortSubVector(vector<int>& data, int low, int high) {
     // TODO : Please complete MergeSortSubVector code here
     // Hint : recursively call itself
     //        Merge function is needed
-    cout << low;
+
     if(low < high){
         int mid = (low + high) / 2;
         MergeSortSubVector(data, low, mid);
