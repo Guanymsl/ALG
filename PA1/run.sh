@@ -30,7 +30,7 @@ do
         COMMAND_OUTPUT=$(./bin/NTU_sort -$SORT_OPTION "$INPUT_FILE" "$OUTPUT_FILE" 2>&1)
 
         # Extract the CPU time and memory usage from the command output
-        CPU_TIME=$(echo "$COMMAND_OUTPUT" | grep "The total CPU time" | awk '{print $5}')
+        CPU_TIME=$(echo "$COMMAND_OUTPUT" | grep "The total CPU time" | awk '{print $5}' | sed 's/ms//')
         MEMORY=$(echo "$COMMAND_OUTPUT" | grep "memory:" | awk '{print $2}' | sed 's/KB//')
 
         # If memory is not captured, set it to 0 as default
