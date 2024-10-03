@@ -1,5 +1,6 @@
 #!/bin/bash
 ulimit -s 262144
+chmod u+x ./utility/PA1_Result_Checker
 
 SORT_OPTIONS=("IS" "MS" "BMS" "QS" "RQS")
 INPUT_FILES=("5.case1"
@@ -18,9 +19,8 @@ do
         INPUT_FILE="./inputs/${CASE_NAME}.in"
         OUTPUT_FILE="./outputs/${CASE_NAME}.out"
 
-        # 執行排序命令
         COMMAND_OUTPUT=$(./bin/NTU_sort -$SORT_OPTION "$INPUT_FILE" "$OUTPUT_FILE" 2>&1)
-        CHECKER_OUTPUT=$(./PA1_Result_Checker "$INPUT_FILE" "$OUTPUT_FILE")
+        CHECKER_OUTPUT=$(./utility/PA1_Result_Checker "$INPUT_FILE" "$OUTPUT_FILE")
 
         echo "Checker result for $CASE_NAME with $SORT_OPTION:"
         echo "$CHECKER_OUTPUT"
