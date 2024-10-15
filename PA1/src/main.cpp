@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     CommonNs::TmStat stat;
 
     //////////// read the input file /////////////
-    
+
     char buffer[200];
     fstream fin(argv[2]);
     fstream fout;
@@ -46,13 +46,13 @@ int main(int argc, char* argv[])
     int junk,num;
     vector<int> data;
     while (fin >> junk >> num)
-        data.push_back(num); // data[0] will be the first data. 
+        data.push_back(num); // data[0] will be the first data.
                              // data[1] will be the second data and so on.
-    
+
     //////////// the sorting part ////////////////
     tmusg.periodStart();
-    SortTool NTUSortTool; 
-    
+    SortTool NTUSortTool;
+
     string mode(argv[1]);
     if(mode == "-IS") {
         NTUSortTool.InsertionSort(data);
