@@ -4,9 +4,9 @@
 #include <vector>
 #include <cstdlib>
 
-#define pii pair<int,int>
-
 using namespace std;
+
+typedef pair<int, int> pii;
 
 vector<pii> mps(int, vector<pii>);
 

@@ -2,12 +2,13 @@
 #include <fstream>
 #include "max_planar_subset.h"
 
-#define pii pair<int,int>
 #define mp make_pair
 #define ff first
 #define ss second
 
 using namespace std;
+
+typedef pair<int, int> pii;
 
 int main(int argc, char* argv[]){
 
