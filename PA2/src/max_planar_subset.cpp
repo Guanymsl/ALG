@@ -12,70 +12,64 @@
 
 using namespace std;
 
-void rec(vector<pii>& MPS, const vi& v, const vector<vi>& d, const vector<vi>& M, int i, int j){
-    if(i >= j) return;
+int solve(int i, int j, const vi& v, vector<vi>& M, vector<vi>& dirc){
+    if(i >= j) return 0;
+    if(M[i][j] != -1) return M[i][j];
 
-    int next = d[i][j];
-    if(next == -2){
-        rec(MPS, v, d, M, i, j - 1);
-    }else if(next == -1){
+    int a = v[j];
+    if (a < i || a > j){
+        M[i][j] = solve(i, j - 1, v, M, dirc);
+        dirc[i][j] = -2;
+    } else if(a > i && a <= j){
+        int o1 = solve(i, j - 1, v, M, dirc);
+        int o2 = solve(i, a - 1, v, M, dirc) + solve(a + 1, j - 1, v, M, dirc) + 1;
+
+        if(o2 > o1){
+            M[i][j] = o2;
+            dirc[i][j] = a;
+        }else{
+            M[i][j] = o1;
+            dirc[i][j] = -2;
+        }
+    } else {
+        M[i][j] = solve(i + 1, j - 1, v, M, dirc) + 1;
+        dirc[i][j] = -1;
+    }
+
+    return M[i][j];
+}
+
+void rec(vector<pii>& MPS, const vi& v, const vector<vi>& dirc, int i, int j) {
+    if (i >= j) return;
+
+    int next = dirc[i][j];
+    if (next == -2) {
+        rec(MPS, v, dirc, i, j - 1);
+    } else if (next == -1) {
         MPS.pb(mp(i, j));
-        rec(MPS, v, d, M, i + 1, j - 1);
-    }else{
+        rec(MPS, v, dirc, i + 1, j - 1);
+    } else {
         MPS.pb(mp(v[j], j));
-        rec(MPS, v, d, M, i, next - 1);
-        rec(MPS, v, d, M, next + 1, j - 1);
+        rec(MPS, v, dirc, i, next - 1);
+        rec(MPS, v, dirc, next + 1, j - 1);
     }
 }
 
 vector<pii> mps(int n, vector<pii> C) {
-    vector<vi> M(n, vi(n, 0));
+    vector<vi> M(n, vi(n, -1));
     vector<vi> dirc(n, vi(n, 0));
     vector<pii> MPS;
 
     vi vertex(n, 0);
     int N = C.size();
-    for(int c = 0; c < N; c++){
+    for (int c = 0; c < N; c++) {
         vertex[C[c].ff] = C[c].ss;
         vertex[C[c].ss] = C[c].ff;
     }
 
-    for(int d = 1; d < n; d++){
-        for(int i = 0; i + d < n; i++){
-            int j = i + d;
-            int a = vertex[j];
-
-            if(a < i || a > j){
-
-                M[i][j] = M[i][j - 1];
-                dirc[i][j] = -2;
-
-            }else if(a > i && a <= j){
-
-                if(M[i][j - 1] <  M[i][a - 1] + M[a + 1][j - 1] + 1){
-
-                    M[i][j] = M[i][a - 1] + M[a + 1][j - 1] + 1;
-                    dirc[i][j] = a;
-
-                }else{
-
-                    M[i][j] = M[i][j - 1];
-                    dirc[i][j] = -2;
-
-                }
-
-            }else{
-
-                M[i][j] = M[i + 1][j - 1] + 1;
-                dirc[i][j] = -1;
-
-            }
-        }
-    }
-
-    rec(MPS, vertex, dirc, M, 0, n - 1);
-
+    solve(0, n - 1, vertex, M, dirc);
+    rec(MPS, vertex, dirc, 0, n - 1);
     sort(MPS.begin(), MPS.end());
-    return MPS;
 
+    return MPS;
 }
