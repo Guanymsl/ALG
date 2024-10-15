@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void rec(vector<pii>& MPS, vi v, vector<vi> d, vector<vi> M, int i, int j){
+void rec(vector<pii>& MPS, const vi& v, const vector<vi>& d, const vector<vi>& M, int i, int j){
     if(i >= j) return;
 
     int next = d[i][j];
@@ -75,6 +75,7 @@ vector<pii> mps(int n, vector<pii> C) {
 
     rec(MPS, vertex, dirc, M, 0, n - 1);
 
+    sort(MPS.begin(), MPS.end());
     return MPS;
 
 }

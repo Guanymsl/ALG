@@ -1,4 +1,3 @@
-#include <cstring>
 #include <iostream>
 #include <fstream>
 #include "max_planar_subset.h"
@@ -11,6 +10,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
+
     fstream fin(argv[1]);
     fstream fout;
     fout.open(argv[2], ios::out);
