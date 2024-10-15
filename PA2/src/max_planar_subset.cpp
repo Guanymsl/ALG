@@ -1,16 +1,16 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "max_planar_subset.h"
 
-#define pii pair<int,int>
-#define vi vector<int>
 #define pb push_back
 #define mp make_pair
 #define ff first
 #define ss second
 
 using namespace std;
+
+typedef pair<int, int> pii;
+typedef vector<int> vi;
 
 int solve(int i, int j, const vi& v, vector<vi>& M, vector<vi>& dirc){
     if(i >= j) return 0;
