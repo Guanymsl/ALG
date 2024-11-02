@@ -3,78 +3,62 @@
 #include <algorithm>
 
 #define pb push_back
-#define mp make_pair
 
 using namespace std;
 
-typedef pair<int, int> pii;
+typedef vector<int> vi;
 
-int solve(int i, int j, const int* v, int** M, short** dirc){
+int solve(int i, int j, const int* C, int** M){
+    int ji = j - i;
     if(i >= j) return 0;
-    if(M[i][j] != -1) return M[i][j];
+    if(M[i][ji] != -1) return M[i][ji];
 
-    int a = v[j];
+    int a = C[j];
     if(a < i || a > j){
-        M[i][j] = solve(i, j - 1, v, M, dirc);
-        dirc[i][j] = -2;
+        M[i][ji] = solve(i, j - 1, C, M);
     }else if(a > i && a <= j){
-        int o1 = solve(i, j - 1, v, M, dirc);
-        int o2 = solve(i, a - 1, v, M, dirc) + solve(a + 1, j - 1, v, M, dirc) + 1;
+        M[i][ji] = max(solve(i, j - 1, C, M), solve(i, a - 1, C, M) + solve(a + 1, j - 1, C, M) + 1);
+    }else{
+        M[i][ji] = solve(i + 1, j - 1, C, M) + 1;
+    }
 
-        if(o2 > o1){
-            M[i][j] = o2;
-            dirc[i][j] = a;
-        }else{
-            M[i][j] = o1;
-            dirc[i][j] = -2;
+    return M[i][ji];
+}
+
+void rec(vi& MPS, int** M, const int* C, int i, int j){
+    if(i >= j) return;
+
+    int a = C[j];
+    if(a < i || a > j){
+        rec(MPS, M, C, i, j - 1);
+    }else if(a > i && a <= j){
+        if(solve(i, j , C, M) == solve(i, j - 1, C, M)) rec(MPS, M, C, i, j - 1);
+        else{
+            MPS.pb(a);
+            rec(MPS, M, C, i, a - 1);
+            rec(MPS, M, C, a + 1, j - 1);
         }
     }else{
-        M[i][j] = solve(i + 1, j - 1, v, M, dirc) + 1;
-        dirc[i][j] = -1;
-    }
-
-    return M[i][j];
-}
-
-void rec(vector<pii>& MPS, const int* v, short** dirc, int i, int j) {
-    while (i < j) {
-        int next = dirc[i][j];
-        if(next == -2){
-            j--;
-        }else if (next == -1){
-            MPS.pb(mp(i, j));
-            i++;
-            j--;
-        }else{
-            MPS.pb(mp(next, j));
-            rec(MPS, v, dirc, i, next - 1);
-            i = next + 1;
-            j--;
-        }
+        MPS.pb(a);
+        rec(MPS, M, C, i + 1, j - 1);
     }
 }
 
-vector<pii> mps(int n, const int* C){
+vi mps(int n, const int* C){
     int** M = new int*[n];
-    short** dirc = new short*[n];
     for(int i = 0; i < n; i++){
-        M[i] = new int[n];
-        dirc[i] = new short[n];
-        fill(M[i], M[i] + n, -1);
+        M[i] = new int[n - i];
+        fill(M[i], M[i] + n - i, -1);
     }
 
-    solve(0, n - 1, C, M, dirc);
+    solve(0, n - 1, C, M);
 
-    vector<pii> MPS;
-    rec(MPS, C, dirc, 0, n - 1);
+    vi MPS;
+    rec(MPS, M, C, 0, n - 1);
     sort(MPS.begin(), MPS.end());
 
-    for(int i = 0; i < n; i++){
-        delete[] M[i];
-        delete[] dirc[i];
-    }
+    for(int i = 0; i < n; i++) delete[] M[i];
     delete[] M;
-    delete[] dirc;
 
     return MPS;
 }

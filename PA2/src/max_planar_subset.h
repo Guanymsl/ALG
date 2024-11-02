@@ -2,15 +2,11 @@
 #define _MAX_PLANAR_SUBSET_
 
 #include <vector>
-#include <cstdlib>
-
-#define ff first
-#define ss second
 
 using namespace std;
 
-typedef pair<int, int> pii;
+typedef vector<int> vi;
 
-vector<pii> mps(int, const int*);
+vi mps(int, const int*);
 
 #endif

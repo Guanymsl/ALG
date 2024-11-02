@@ -23,11 +23,11 @@ int main(int argc, char* argv[]){
 
     tmusg.periodStart();
 
-    vector<pii> ans = mps(n, vertex);
+    vi ans = mps(n, vertex);
 
     fout << ans.size() << '\n';
     for(int i = 0; i < ans.size(); i++)
-        fout << ans[i].ff << " " << ans[i].ss << '\n';
+        fout << ans[i] << " " << vertex[ans[i]] << '\n';
 
     delete[] vertex;
 
