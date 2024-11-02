@@ -2,15 +2,7 @@
 #include <fstream>
 #include "max_planar_subset.h"
 
-#define ff first
-#define ss second
-
-using namespace std;
-
-typedef pair<int, int> pii;
-
 int main(int argc, char* argv[]) {
-
     fstream fin(argv[1]);
     fstream fout;
     fout.open(argv[2], ios::out);
@@ -25,8 +17,7 @@ int main(int argc, char* argv[]) {
         vertex[j] = i;
     }
 
-    vector<pii> ans;
-    ans = mps(n, vertex);
+    vector<pii> ans = mps(n, vertex);
 
     fout << ans.size() << '\n';
     for (int i = 0; i < ans.size(); i++)
