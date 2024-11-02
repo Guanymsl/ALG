@@ -30,7 +30,7 @@ int main(int argc, char* argv[]){
 
     fout << ans.size() <<endl;
     for (int i = 0; i < ans.size(); i++)
-        fout << ans[i].ff << " " << ans[i].ss << endl;
+        fout << ans[i].ff << " " << ans[i].ss << '\n';
 
     fin.close();
     fout.close();
