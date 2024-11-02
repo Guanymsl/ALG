@@ -9,7 +9,7 @@ using namespace std;
 
 typedef pair<int, int> pii;
 
-int solve(int i, int j, const int* v, int** M, int** dirc){
+int solve(int i, int j, const int* v, int** M, short** dirc){
     if(i >= j) return 0;
     if(M[i][j] != -1) return M[i][j];
 
@@ -36,7 +36,7 @@ int solve(int i, int j, const int* v, int** M, int** dirc){
     return M[i][j];
 }
 
-void rec(vector<pii>& MPS, const int* v, int** dirc, int i, int j) {
+void rec(vector<pii>& MPS, const int* v, short** dirc, int i, int j) {
     while (i < j) {
         int next = dirc[i][j];
         if(next == -2){
@@ -56,10 +56,10 @@ void rec(vector<pii>& MPS, const int* v, int** dirc, int i, int j) {
 
 vector<pii> mps(int n, const int* C){
     int** M = new int*[n];
-    int** dirc = new int*[n];
+    short** dirc = new short*[n];
     for(int i = 0; i < n; i++){
         M[i] = new int[n];
-        dirc[i] = new int[n];
+        dirc[i] = new short[n];
         fill(M[i], M[i] + n, -1);
     }
 
