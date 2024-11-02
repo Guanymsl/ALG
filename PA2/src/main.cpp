@@ -2,7 +2,6 @@
 #include <fstream>
 #include "max_planar_subset.h"
 
-#define mp make_pair
 #define ff first
 #define ss second
 
@@ -10,7 +9,7 @@ using namespace std;
 
 typedef pair<int, int> pii;
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 
     fstream fin(argv[1]);
     fstream fout;
@@ -19,18 +18,21 @@ int main(int argc, char* argv[]){
     int n;
     fin >> n;
     int i, j;
-    vector<pii> data;
-    while(fin >> i >> j){
-        if(i > j) swap(i, j);
-        data.push_back(mp(i, j));
+    int* vertex = new int[n];
+    for (int k = 0; k < n / 2; k++) {
+        fin >> i >> j;
+        vertex[i] = j;
+        vertex[j] = i;
     }
 
     vector<pii> ans;
-    ans = mps(n, data);
+    ans = mps(n, vertex);
 
-    fout << ans.size() <<endl;
+    fout << ans.size() << '\n';
     for (int i = 0; i < ans.size(); i++)
         fout << ans[i].ff << " " << ans[i].ss << '\n';
+
+    delete[] vertex;
 
     fin.close();
     fout.close();

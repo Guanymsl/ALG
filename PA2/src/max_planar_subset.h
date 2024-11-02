@@ -7,7 +7,8 @@
 using namespace std;
 
 typedef pair<int, int> pii;
+typedef vector<int> vi;
 
-vector<pii> mps(int, vector<pii>);
+vector<pii> mps(int, const int*);
 
 #endif
