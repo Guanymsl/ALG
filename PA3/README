@@ -1,0 +1,34 @@
+This is README file for Algorithm PA#3
+Author: B12901024 Lee, Yi-Chen
+Date: 2024/12/18
+=====
+SYNOPSIS:
+
+./bin/cb ./inputs/<input_file_name> ./outputs/<output_file_name>
+
+This program solve cycle breaking.
+=====
+DIRECTORY:
+
+bin/	  executable binary
+doc/	  reports
+inputs/   input data
+outputs/  output result
+lib/	  library
+src/ 	  source C++ codes
+utilities/  checker
+checker/  checker
+======
+HOW TO COMPILE:
+
+	Under the root directory of this PA, simply type
+	make
+======
+HOW TO RUN:
+
+	./bin/cb ./inputs/<input_file_name> ./outputs/<output_file_name>
+	For example,
+	under b12901024_pa3
+	./bin/cb ./inputs/public_case_0.in ./outputs/public_case_0.out
+======
+OTHER NOTICE:
