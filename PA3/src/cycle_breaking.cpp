@@ -46,10 +46,6 @@ pair<int, vE> cb(char mode, int V, vpii* E){
                     dsu.joint(u, v);
                     G[u].pb(mp(v,w - 100));
                     E[w][i] = mp(-1, -1);
-                }else{
-                    Edge e(u, v, w - 100);
-                    ans.pb(e);
-                    sum += w - 100;
                 }
             }
         }
@@ -60,11 +56,10 @@ pair<int, vE> cb(char mode, int V, vpii* E){
 
                 if(u != -1){
                     vector<bool> vis(V, false);
-                    bool isfa = dfs(G, u, v, vis);
+                    bool isfa = dfs(G, v, u, vis);
 
                     if(isfa){
-                        Edge e(u, v, w - 100);
-                        ans.pb(e);
+                        ans.pb(Edge(u, v, w - 100));
                         sum += w - 100;
                     }else{
                         G[u].pb(mp(v,w - 100));
@@ -78,8 +73,7 @@ pair<int, vE> cb(char mode, int V, vpii* E){
                 int u = E[w][i].ff, v = E[w][i].ss;
 
                 if(u != -1){
-                    Edge e(u, v, w - 100);
-                    ans.pb(e);
+                    ans.pb(Edge(u, v, w - 100));
                     sum += w - 100;
                 }
             }

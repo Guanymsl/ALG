@@ -45,7 +45,6 @@ class DSU{
 
 typedef pair<int, int> pii;
 typedef vector<pii> vpii;
-typedef vector<int> vi;
 typedef vector<Edge> vE;
 
 #define pb push_back
