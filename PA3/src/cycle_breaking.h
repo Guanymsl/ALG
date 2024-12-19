@@ -2,7 +2,6 @@
 #define _CYCLE_BREAKING_
 
 #include <vector>
-#include <utility>
 
 using namespace std;
 
@@ -22,7 +21,7 @@ class DSU{
         void makeset(int n){
             parent.resize(n);
             rank.resize(n, 0);
-            for(int i = 0; i < n; i++) parent[i] = i;
+            for (int i = 0; i < n; i++) parent[i] = i;
         }
 
         int find(int x){
@@ -54,6 +53,6 @@ typedef vector<Edge> vE;
 #define ff first
 #define ss second
 
-pair<int, vE> cb(char, int, vpii*, vpii*);
+pair<int, vE> cb(char, int, vpii*);
 
 #endif

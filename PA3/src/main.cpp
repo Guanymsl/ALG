@@ -19,26 +19,23 @@ int main(int argc, char* argv[]){
     fin >> m;
 
     int i, j, w;
-    vpii* G = new vpii[n];
+
     vpii* E = new vpii[201];
 
     for(int k = 0; k < m; k++){
         fin >> i >> j >> w;
 
-        G[i].pb(mp(j, w));
         E[w + 100].pb(mp(i, j));
-        if(mode == 'u') G[j].pb(mp(i, w));
     }
 
     tmusg.periodStart();
 
-    pair<int, vE> ans = cb(mode, n, G, E);
+    pair<int, vE> ans = cb(mode, n, E);
 
     fout << ans.ff << '\n';
     for(int i = 0; i < ans.ss.size(); i++)
         fout << ans.ss[i].u << " " << ans.ss[i].v << " " << ans.ss[i].w << '\n';
 
-    delete[] G;
     delete[] E;
 
     tmusg.getPeriodUsage(stat);

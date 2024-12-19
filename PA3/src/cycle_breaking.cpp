@@ -1,14 +1,27 @@
 #include <iostream>
 #include "cycle_breaking.h"
 
-pair<int, vE> cb(char mode, int V, vpii* G, vpii* E){
+bool dfs(vpii* G, int u, int v, vector<bool>& vis){
+    if(u == v) return true;
+
+    vis[u] = true;
+
+    for(int i = 0; i < G[u].size(); i++){
+        int next = G[u][i].ff;
+        if(!vis[next] && dfs(G, next, v, vis)) return true;
+    }
+
+    return false;
+}
+
+pair<int, vE> cb(char mode, int V, vpii* E){
+    DSU dsu;
+    dsu.makeset(V);
+
+    vE ans;
+    int sum = 0;
+
     if(mode == 'u'){
-        DSU dsu;
-        dsu.makeset(V);
-
-        vE ans;
-        int sum = 0;
-
         for(int w = 201; w >= 0; w--){
             for(int i = 0; i < E[w].size(); i++){
                 int u = E[w][i].ff, v = E[w][i].ss;
@@ -22,12 +35,58 @@ pair<int, vE> cb(char mode, int V, vpii* G, vpii* E){
                 }
             }
         }
-
-        return mp(sum, ans);
     }else{
-        vE ans;
-        int sum = 0;
+        vpii* G = new vpii[V];
 
-        return mp(sum, ans);
+        for(int w = 201; w >= 0; w--){
+            for(int i = 0; i < E[w].size(); i++){
+                int u = E[w][i].ff, v = E[w][i].ss;
+
+                if(dsu.find(u) != dsu.find(v)){
+                    dsu.joint(u, v);
+                    G[u].pb(mp(v,w - 100));
+                    E[w][i] = mp(-1, -1);
+                }else{
+                    Edge e(u, v, w - 100);
+                    ans.pb(e);
+                    sum += w - 100;
+                }
+            }
+        }
+
+        for(int w = 201; w > 100; w--){
+            for(int i = 0; i < E[w].size(); i++){
+                int u = E[w][i].ff, v = E[w][i].ss;
+
+                if(u != -1){
+                    vector<bool> vis(V, false);
+                    bool isfa = dfs(G, u, v, vis);
+
+                    if(isfa){
+                        Edge e(u, v, w - 100);
+                        ans.pb(e);
+                        sum += w - 100;
+                    }else{
+                        G[u].pb(mp(v,w - 100));
+                    }
+                }
+            }
+        }
+
+        for(int w = 100; w >= 0; w--){
+            for(int i = 0; i < E[w].size(); i++){
+                int u = E[w][i].ff, v = E[w][i].ss;
+
+                if(u != -1){
+                    Edge e(u, v, w - 100);
+                    ans.pb(e);
+                    sum += w - 100;
+                }
+            }
+        }
+
+        delete []G;
     }
+
+    return mp(sum, ans);
 }
