@@ -22,15 +22,14 @@ pair<int, vE> cb(char mode, int V, vpii* E){
     int sum = 0;
 
     if(mode == 'u'){
-        for(int w = 201; w >= 0; w--){
+        for(int w = 200; w >= 0; w--){
             for(int i = 0; i < E[w].size(); i++){
                 int u = E[w][i].ff, v = E[w][i].ss;
 
                 if(dsu.find(u) != dsu.find(v)){
                     dsu.joint(u, v);
                 }else{
-                    Edge e(u, v, w - 100);
-                    ans.pb(e);
+                    ans.pb(Edge(u, v, w - 100));
                     sum += w - 100;
                 }
             }
@@ -38,7 +37,7 @@ pair<int, vE> cb(char mode, int V, vpii* E){
     }else{
         vpii* G = new vpii[V];
 
-        for(int w = 201; w >= 0; w--){
+        for(int w = 200; w >= 0; w--){
             for(int i = 0; i < E[w].size(); i++){
                 int u = E[w][i].ff, v = E[w][i].ss;
 
@@ -50,7 +49,7 @@ pair<int, vE> cb(char mode, int V, vpii* E){
             }
         }
 
-        for(int w = 201; w > 100; w--){
+        for(int w = 200; w > 100; w--){
             for(int i = 0; i < E[w].size(); i++){
                 int u = E[w][i].ff, v = E[w][i].ss;
 
