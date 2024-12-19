@@ -15,9 +15,10 @@ struct Edge{
 };
 
 class DSU{
-    public:
+    private:
         vector<int> parent, rank;
 
+    public:
         void makeset(int n){
             parent.resize(n);
             rank.resize(n, 0);
@@ -52,6 +53,7 @@ typedef vector<Edge> vE;
 #define ff first
 #define ss second
 
+bool dfs(vpii*, int, int, vector<bool>&);
 pair<int, vE> cb(char, int, vpii*);
 
 #endif
